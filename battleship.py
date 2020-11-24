@@ -23,9 +23,10 @@ while True:
     row = input("Provide a row: ")
     if row not in rows:
         print("That's not quite right , please use valid inputs")
-        break
+        continue
     col = input("Provide a column: ")
     if col not in columns:
         print("That's not quite right, please use valid inputs")
-        break
+        continue
+        
     break
