@@ -27,7 +27,9 @@ def ship_placement(board):
 
 
 def print_board():
-    print(" ", " ".join("12345"))
+    for i in range(0,5):
+        board.append(["O"] * 5)
+        print(" ", " ".join("12345"))
     for letter, row in zip('ABCDE', board):
         print(letter, " ".join(row))
 
