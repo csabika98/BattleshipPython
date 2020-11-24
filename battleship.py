@@ -1,5 +1,6 @@
 import random
 import os
+import time
 
 board = []
 rows = ["a","A","b","B","c","C","e","E"]
@@ -31,8 +32,26 @@ def ship_placement(board):
                 else:
                     print("That position isn't empty!")
         except Exception:
-            print("bamm")
-        break
+            print("bamm meghaltal")
+        if position[0].lower() not in ["a", "b", "c", "d", "e"] or int(position[1]) not in [1, 2, 3, 4, 5]:
+            print("Not a valid position!")
+        else:
+            break
+    return position
+
+
+def ship_positions():
+    positions = []
+    player1 = ship_placement(board)
+    print_board()
+    time.sleep(1)
+    print_board()
+    player2 = ship_placement(board)
+    list(player1)
+    list(player2)
+    positions.append(player1)
+    positions.append(player2)
+    print(positions)
 
 
 def print_board():
@@ -43,18 +62,5 @@ def print_board():
 
 init_board()
 print_board()
-ship_placement(board)
+ship_positions()
 print_board()
-
-
-'''while True:
-    row = input("Provide a row: ")
-    if row not in rows:
-        print("That's not quite right , please use valid inputs")
-        continue
-    col = input("Provide a column: ")
-    if col not in columns:
-        print("That's not quite right, please use valid inputs")
-        continue
-   
-    break'''
