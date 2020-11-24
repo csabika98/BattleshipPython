@@ -16,20 +16,23 @@ def init_board():
 def ship_placement(board):
     temp_dict = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4}
     while True:
-        position = input("Provide a row and column:")
+        position = input("Provide position:")
+        empty_list = []
+        row = temp_dict.get(position[0].lower())
+        col = int(position[1]) - 1
         if position == "quit":
             print("Goodbye!")
             exit()
-        try:
-            if position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5]:
-                row = temp_dict.get(position[0].lower())
-                col = int(position[1]) - 1
-                if board[row][col] == "o":
-                    board[row][col] = "x"
-                else:
-                    print("That position isn't empty!")
-        except Exception:
-            print("bamm")
+        if position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5]:
+            board[row][col] = "o"
+            board[row][col] = "x"
+        else:
+            print("That's not quite good! Please use valid input! ")
+            try_ag = input("Do you wanna try again? y/n ")
+        if not position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5] and try_ag == "y":
+            position
+        if not position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5] and try_ag == "n":
+            exit()
         break
 
 
