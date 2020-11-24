@@ -17,7 +17,6 @@ def ship_placement(board):
     temp_dict = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4}
     while True:
         position = input("Provide position:")
-        empty_list = []
         row = temp_dict.get(position[0].lower())
         col = int(position[1]) - 1
         if position == "quit":
@@ -27,7 +26,6 @@ def ship_placement(board):
             if position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5]:
                 board[row][col] = "o"
                 board[row][col] = "x"
-                board.append()
             else:
                 print("That's not quite good! Please use valid input! ")
                 try_ag = input("Do you wanna try again? y/n ")
