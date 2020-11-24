@@ -23,16 +23,20 @@ def ship_placement(board):
         if position == "quit":
             print("Goodbye!")
             exit()
-        if position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5]:
-            board[row][col] = "o"
-            board[row][col] = "x"
-        else:
-            print("That's not quite good! Please use valid input! ")
-            try_ag = input("Do you wanna try again? y/n ")
-        if not position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5] and try_ag == "y":
-            position
-        if not position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5] and try_ag == "n":
-            exit()
+        try:
+            if position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5]:
+                board[row][col] = "o"
+                board[row][col] = "x"
+                empty_list.append()
+            else:
+                print("That's not quite good! Please use valid input! ")
+                try_ag = input("Do you wanna try again? y/n ")
+            if not position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5] and try_ag == "y":
+                ship_placement
+            if not position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5] and try_ag == "n":
+                exit()
+        except: 
+            print("good work")
         break
 
 
