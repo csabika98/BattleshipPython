@@ -16,14 +16,23 @@ def init_board():
 
 
 def ship_placement(board):
-    ship_row = input("Enter the ship's position (row): ")
-    ship_col = input("Enter the ship's position (col): ")
-    ship_position = [ship_row, ship_col]
-    for i in board:
-        if i == ship_position[0]:
-            for e in i:
-                if e == ship_position[1]:
-                    e = "x"
+    temp_dict = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4}
+    while True:
+        position = input("Provide a position:")
+        if position == "quit":
+            print("Goodbye!")
+            exit()
+        try:
+            if position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5]:
+                row = temp_dict.get(position[0].lower())
+                col = int(position[1]) - 1
+                if board[row][col] == "o":
+                    board[row][col] = "x"
+                else:
+                    print("That position isn't empty!")
+        except Exception:
+            print("bamm")
+        break
 
 
 def print_board():
