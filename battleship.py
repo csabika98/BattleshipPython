@@ -1,4 +1,11 @@
-import random 
+import random
+import os
+
+
+def clear_terminal():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
 rows = ["a","A","b","B","c","C","e","E"]
 columns = ["1","2","3","4","5"]
 def print_board():
