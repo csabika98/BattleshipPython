@@ -1,23 +1,23 @@
 import random
 import os
 
+board = []
+
+
 
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+
 def init_board():
-    board = []
-    for i in range(0,5):
+    for i in range(5):
         board.append(["o"] * 5)
-    print(" ", " ".join("12345"))
-    for letter, row in zip('ABCDE', board):
-        print(letter, " ".join(row))
 
 
-def first_input(board):
+def ship_placement(board):
     temp_dict = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4}
     while True:
-        position = input("Provide a position:")
+        position = input("Provide a row and column:")
         if position == "quit":
             print("Goodbye!")
             exit()
@@ -32,23 +32,17 @@ def first_input(board):
         except Exception:
             print("bamm")
         break
-        if position not in temp_dict:
-            print("That's not quite right , please use valid inputs")
-            try_ag = input("Do you wanna try again? y/n : ")
-        if position not in temp_dict and try_ag == "y":
-            print("The game now restarting!")  
-        if position not in temp_dict and try_ag == "n":
-                exit()
 
 
+def print_board():
+    print(" ", " ".join("12345"))
+    for letter, row in zip('ABCDE', board):
+        print(letter, " ".join(row))
 
-def second_input():
-    columns = ["1","2","3","4","5"]
-    while True:
-        col = input("Provide a column: ")
-        if col not in columns:
-            print("That's not quite right, please use valid inputs")
-        
-if __name__ == "__main__":
-    init_board()
-    first_input(board)
+
+init_board()
+print_board()
+ship_placement(board)
+print_board()
+
+
