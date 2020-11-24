@@ -16,18 +16,37 @@ def print_board():
 
 
 def first_input():
-    rows = ["a","A","b","B","c","C","e","E"]
+    board = []
+    for i in range(0,5):
+        c_board = board.append(["O"] * 5)
+    print(" ", " ".join("12345"))
+    for letter, row in zip('ABCDE', board):
+        print(letter, " ".join(row))
+    temp_dict = {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5}
     while True:
-        row = input("type a row:")
-        if row not in rows:
-            print("That's not quite right , please use valid inputs")
-            retry = input("Do you wanna try again? y/n : ")
-        elif retry == "y":
-            first_input() 
-        elif retry == "n":
-            exit()
-        break
+        position = input("type a row and column:")
+        row_for_retry = position
+        try:
+            if position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5]:
+                row = temp_dict.get(position[0].lower())
+                col = int(position[1]) - 1
+            if c_board[row][col] == "X":
+                c_board[row][col] = "X"
+            else:
+                print("That position isn't empty!")
+        except Exception:
+            print("bamm")  
+            break
+            if position not in temp_dict:
+                print("That's not quite right , please use valid inputs")
+                try_ag = input("Do you wanna try again? y/n : ")
+            if position not in temp_dict and try_ag == "y":
+                print("The game now restarting!")
+                row_for_retry  
+            if position not in temp_dict and try_ag == "n":
+                exit()
 
+first_input()
 
 def second_input():
     columns = ["1","2","3","4","5"]
@@ -36,8 +55,3 @@ def second_input():
         if col not in columns:
             print("That's not quite right, please use valid inputs")
         
-
-if __name__ == "__main__":
-    print_board()
-    first_input()
-    second_input()
