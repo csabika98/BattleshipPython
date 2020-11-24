@@ -18,7 +18,7 @@ def init_board():
         board.append(["o"] * 5)
     return board 
 
-def switch_player(current_player):
+def switch_player(current_player): # switching player 1 to player 2
     if current_player == 1:
         current_player = 2
     else:
