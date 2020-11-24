@@ -27,7 +27,7 @@ def ship_placement(board):
             if position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5]:
                 board[row][col] = "o"
                 board[row][col] = "x"
-                empty_list.append()
+                board.append()
             else:
                 print("That's not quite good! Please use valid input! ")
                 try_ag = input("Do you wanna try again? y/n ")
