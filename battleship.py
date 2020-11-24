@@ -7,7 +7,7 @@ def clear_terminal():
 
 
 def print_board():
-    board = []
+    first_input(board=[])
     for i in range(0,5):
         board.append(["o"] * 5)
     print(" ", " ".join("12345"))
@@ -16,7 +16,7 @@ def print_board():
 print_board()
 
 
-def first_input():
+def first_input(board):
     board = []
     temp_dict = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4}
     while True:
