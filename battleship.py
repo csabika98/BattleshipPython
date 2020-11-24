@@ -34,7 +34,7 @@ def ship_placement(board):
             if not position[0].lower() in ["a", "b", "c", "d", "e"] and int(position[1]) in [1, 2, 3, 4, 5] and try_ag == "n":
                 exit()
         except: 
-            print("good work")
+            print("Good Work")
         break
 
 
