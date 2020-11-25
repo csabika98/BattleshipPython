@@ -70,9 +70,8 @@ def choosing_scene():
             os.system('cls||clear')
             print("Current player for shooting round is player: ", current_player)
 
-
     while is_it_shooting_phase:
-        if  current_player == 1:
+        if current_player == 1:
             print_board(shoot_board1)
             board = shoot_board1
         else:
@@ -86,19 +85,18 @@ def choosing_scene():
             board = board_player_2
         else:
             board = board_player_1
-
         
         if not place_is_okay(board, translated_cooridinates):
-            mark = "S"
+            mark = "M"
             if current_player == 1:
                 board = shoot_board1
             else:
                 board = shoot_board2
             mark_player_coordinates(board, translated_cooridinates, mark)
-            checking_if_you_win(current_player, board)
+            win_check(current_player, board) 
         
         else:
-            mark = "M"
+            mark = "S"
             if current_player == 1:
                 board = shoot_board1
             else:
@@ -122,6 +120,14 @@ def checking_if_you_win(current_player, board):
     if sum(x.count('H') for x in board) == 3:
         print("Congrats player", current_player, "has won the game")
         exit()
+
+
+
+def win_check(current_player, board):
+    if sum(x.count('H') for x in board) == 3:
+        print("Congratulations player", current_player, "has won the game")
+        exit()
+
 
 
 def place_is_okay(board, coordinates):
