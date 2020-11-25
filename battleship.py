@@ -27,50 +27,53 @@ def switch_player(current_player): # switching player 1 to player 2
 
 
 def choosing_scene():
-    ship = 1
+    board1 = init_board()
+    board2 = init_board()
     shoot_board1 = init_board()
     shoot_board2 = init_board()
+    is_running = True
+    ship = 1
+    mark = ""
     previous_move = []
-    is_it_shooting_phase = True
-    board_player_1 = init_board() # board of each player
-    board_player_2 = init_board()
-    mark = "" # need mark your choices , literraly saving your choices 
-    current_player = 1 # variables to be able to switch players (player1 or player2 ) NOT FINISHED UNDER DEVELOPMENT
-    app_only_run_once = True # with this variable i am able to PRINT Board  , OR Stop the screen/print board and with this i am making sure the program runs only Once
-    while app_only_run_once: # i made a while loop using my variables if TRUE the program STARTS , if FALSE It not starts anymore
-        mark = "X"  
-        if current_player == 1: # you can decide if player1 start his choosing or player2 
-            print_board(board_player_1)
-            board = board_player_1
+    current_player = 1
+    is_shooting = True
+    while is_running:
+        mark = "X"
+        if current_player == 1:
+            print_board(board1)
+            board = board1
         else:
-            print_board(board_player_2)
-            board = board_player_2
-        coordinates = get_input() # getting the coordinates
+            print_board(board2)
+            board = board2
+        coordinates = get_input()
         os.system('cls||clear')
-        if not valid_input(coordinates):  # sorting out if you have typed a valid input or not
+        if not valid_input(coordinates):
             continue
-        translated_coordinates = converter(coordinates)
+        translated_cooridinates = converter(coordinates)
+        #if not place_is_okay(board, translated_cooridinates):
+            #print("Place is already taken")
+            #continue
         if ship == 2:
-            if place_is_available_next_part(board, previous_move, translated_coordinates):
-             continue
+            if place_is_available_next_part(board, previous_move, translated_cooridinates):
+                continue
         if ship == 3:
-            if not place_is_available_next_part(board, previous_move, translated_coordinates):
-                print("Vertical or horizontal only!")
-                continue 
-        mark_player_coordinates(board,translated_coordinates, mark)
-        previous_move = translated_coordinates
-        ship +=1
-
-        if sum(x.count('X') for x in board) == 3:    # adding your choices to the BOARD with using the converter
+            if not place_is_available_next_part(board, previous_move, translated_cooridinates):
+                print("Dude only vertical or horizontal ships!")
+                continue
+        mark_player_coordinates(board, translated_cooridinates, mark)
+        previous_move = translated_cooridinates
+        ship += 1
+        
+        if sum(x.count('X') for x in board) == 3:
             print_board(board)
-            if current_player == 2:      # its making sure that the next player come after the player 1 chosed his X-s
-                app_only_run_once = False
+            if current_player == 2:
+                is_running = False
             current_player = switch_player(current_player)
             os.system("""bash -c 'read -s -n 1 -p "Press any key to continue..."'""")
             os.system('cls||clear')
             print("Current player for shooting round is player: ", current_player)
-
-    while is_it_shooting_phase:
+    
+    while is_shooting:
         if current_player == 1:
             print_board(shoot_board1)
             board = shoot_board1
@@ -82,18 +85,18 @@ def choosing_scene():
             continue
         translated_cooridinates = converter(coordinates)
         if current_player == 1:
-            board = board_player_2
+            board = board2
         else:
-            board = board_player_1
-        
-        if not place_is_okay(board, translated_cooridinates):
+            board = board1
+
+        if not place_is_okay(board,translated_cooridinates):
             mark = "M"
             if current_player == 1:
                 board = shoot_board1
             else:
                 board = shoot_board2
             mark_player_coordinates(board, translated_cooridinates, mark)
-            win_check(current_player, board) 
+            win_check(current_player, board)  
         
         else:
             mark = "S"
@@ -108,13 +111,13 @@ def choosing_scene():
             print("current player", current_player)
 
 
+
 def marking_your_shoots(coordinates, board):
     if board[coordinates[0]][coordinates[1]] == 'X':
         board[coordinates[0]][coordinates[1]] = 'S'
     if board[coordinates[0]][coordinates[1]] != 'X':
         board[coordinates[0]][coordinates[1]] = 'M'      
     return board
-
 
 
 
