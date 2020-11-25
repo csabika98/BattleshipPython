@@ -116,11 +116,6 @@ def marking_your_shoots(coordinates, board):
     return board
 
 
-def checking_if_you_win(current_player, board):
-    if sum(x.count('H') for x in board) == 3:
-        print("Congrats player", current_player, "has won the game")
-        exit()
-
 
 
 def win_check(current_player, board):
