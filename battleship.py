@@ -1,193 +1,91 @@
-import random
 import os
 import time
-
+# A board is a list of rows, and each row is a list of cells with either an 'X' (a battleship)
+# or a blank ' ' (water)
 board = []
+for i in range(5):
+    board.append(["o"] * 5)
+
+# We want to refer to columns by letter, but Python accesses lists by number. So we define
+# a dictionary to translate letters to the corresponding number. Note that Python lists start in
+# zero, not in one!
+letters_to_numbers = {
+    'a': 0,
+    'b': 1,
+    'c': 2,
+    'd': 3,
+    'e': 4,
+}
+
+
+# By writing this as a function, we don't have to repeat it later. It's less code, it makes
+# the rest easier to read, and if we improve this, we have to do it only once!
+def ask_user_for_board_position():
+    column = input("column (A to E):").lower()
+    while column not in "abcde":
+        print("That column is wrong! It should be A, B, C, D or E")
+        column = input("column (A to E):").lower()
+
+    row = input("row (1 to 5):")
+    while row not in "12345":
+        print("That row is wrong! it should be 1, 2, 3, 4 or 5")
+        row = input("row (1 to 5):")
+
+    # The code calling this function will receive the values listed in the return statement below
+    # and it can assign it to variables
+    return int(row) - 1, letters_to_numbers[column]
 
 
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def get_input(): # easy get_input
-    coordinates = input("Please enter a column and row: ")
-    return coordinates
-
-def init_board():
-    board = []
-    for i in range(5):
-        board.append(["o"] * 5)
-    return board 
-
-def switch_player(current_player): # switching player 1 to player 2
-    if current_player == 1:
-        current_player = 2
-    else:
-        current_player = 1
-    return current_player
-
-
-def choosing_scene():
-    board1 = init_board()
-    board2 = init_board()
-    shoot_board1 = init_board()
-    shoot_board2 = init_board()
-    is_running = True
-    ship = 1
-    mark = ""
-    previous_move = []
-    current_player = 1
-    is_shooting = True
-    while is_running:
-        mark = "X"
-        if current_player == 1:
-            print_board(board1)
-            board = board1
-        else:
-            print_board(board2)
-            board = board2
-        coordinates = get_input()
-        os.system('cls||clear')
-        if not valid_input(coordinates):
-            continue
-        translated_cooridinates = converter(coordinates)
-        #if not place_is_okay(board, translated_cooridinates):
-            #print("Place is already taken")
-            #continue
-        if ship == 2:
-            if place_is_available_next_part(board, previous_move, translated_cooridinates):
-                continue
-        if ship == 3:
-            if not place_is_available_next_part(board, previous_move, translated_cooridinates):
-                print("Dude only vertical or horizontal ships!")
-                continue
-        mark_player_coordinates(board, translated_cooridinates, mark)
-        previous_move = translated_cooridinates
-        ship += 1
-        
-        if sum(x.count('X') for x in board) == 3:
-            print_board(board)
-            if current_player == 2:
-                is_running = False
-            current_player = switch_player(current_player)
-            os.system("""bash -c 'read -s -n 1 -p "Press any key to continue..."'""")
-            os.system('cls||clear')
-            print("Current player for shooting round is player: ", current_player)
-    
-    while is_shooting:
-        if current_player == 1:
-            print_board(shoot_board1)
-            board = shoot_board1
-        else:
-            print_board(shoot_board2)
-            board = shoot_board2
-        coordinates = get_input()
-        if not valid_input(coordinates):
-            continue
-        translated_cooridinates = converter(coordinates)
-        if current_player == 1:
-            board = board2
-        else:
-            board = board1
-
-        if not place_is_okay(board,translated_cooridinates):
-            mark = "M"
-            if current_player == 1:
-                board = shoot_board1
-            else:
-                board = shoot_board2
-            mark_player_coordinates(board, translated_cooridinates, mark)
-            win_check(current_player, board)  
-        
-        else:
-            mark = "S"
-            if current_player == 1:
-                board = shoot_board1
-            else:
-                board = shoot_board2
-                print("current player", current_player)
-            mark_player_coordinates(board, translated_cooridinates, mark)
-            print("current player", current_player)
-            current_player = switch_player(current_player)
-            print("current player", current_player)
-
-
-
-def marking_your_shoots(coordinates, board):
-    if board[coordinates[0]][coordinates[1]] == 'X':
-        board[coordinates[0]][coordinates[1]] = 'S'
-    if board[coordinates[0]][coordinates[1]] != 'X':
-        board[coordinates[0]][coordinates[1]] = 'M'      
-    return board
-
-
-
-def win_check(current_player, board):
-    if sum(x.count('H') for x in board) == 3:
-        print("Congratulations player", current_player, "has won the game")
-        exit()
-
-
-
-def place_is_okay(board, coordinates):
-    if board[coordinates[0]][coordinates[1]] == '0':
-        return True
-    else:
-        return False
-
-
-def converter(coordinates):
-    coordinates_list = list(coordinates)
-    try:
-        if coordinates_list[0] == 'A' or coordinates_list[0] == 'a':
-            coordinates_list[0] = 0
-        if coordinates_list[0] == 'B' or coordinates_list[0] == 'b':
-            coordinates_list[0] = 1
-        if coordinates_list[0] == 'C' or coordinates_list[0] == 'c':
-            coordinates_list[0] = 2
-        if coordinates_list[0] == 'D' or coordinates_list[0] == 'd':
-            coordinates_list[0] = 3
-        if coordinates_list[0] == 'E' or coordinates_list[0] == 'e':
-            coordinates_list[0] = 4
-        
-        coordinates_list[1] = int(coordinates_list[1]) - 1
-        
-    except:
-        print('ERROR: Invalid input')
-    return coordinates_list
-
-
-def valid_input(coordinates):  # cheking if the input is valid or not
-    coordinates_list = list(coordinates)
-    if len(coordinates_list) !=2: # if the coordinates less than 2 charachters the program gave you invalid input
-        print("That's not gonna working, please use valid input")
-        return False
-    possible_coordinates = ['a', 'b', 'c', 'd', 'e', 'A', 'B', 'C', 'D', 'E', '1', '2', '3', '4', '5'] # your possibly choices
-    if coordinates_list[0] not in possible_coordinates or coordinates_list[1] not in possible_coordinates:
-        print("Invalid Input try agian")
-        return False
-    return True
 
 def print_board(board):
-    print(" ", " ".join("12345"))
-    for letter, row in zip('ABCDE', board):
+    # Show the board, one row at a time
+    print(" ", " ".join("ABCDE"))
+    for letter, row in zip('12345', board):
         print(letter, " ".join(row))
 
 
-def mark_player_coordinates(board, coordinates, mark):  # marking your choices on the board
-    board[coordinates[0]][coordinates[1]] = mark
-    return board
+# We want 5 battleships, so we use a for loop to ask for a ship 5 times!
+for n in range(2):
+    print("Where do you want ship ", n + 1, "?")
+    row_number, column_number = ask_user_for_board_position()
 
-def place_is_available_next_part(board, previous_move, coordinates):
-    if board[coordinates[0]] == board[previous_move[0]]:
-        if coordinates[1] == previous_move[1] - 1 or coordinates[1] == previous_move[1] + 1:
-            print("Invalid position, you musn't pick side by side !")
-            return True
-    if board[coordinates[1]] == board[previous_move[1]]:
-        if coordinates[0] == previous_move[0] - 1 or coordinates[0] == previous_move[0] + 1:
-            print("Invalid position, you musn't pick side by side !")
-            return True
+    # Check that there are no repeats
+    if board[row_number][column_number] == 'X':
+        print("That spot already has a battleship in it!")
+
+    board[row_number][column_number] = 'X'
+    print_board(board)
+
+time.sleep(1)
+# Now clear the screen, and the other player starts guessing
+clear_terminal()
+
+guesses_board = []
+for i in range(5):
+    guesses_board.append(["o"] * 5)
 
 
-if __name__ == "__main__":
-    choosing_scene()
+# Keep playing until we have 5 right guesses
+guesses = 0
+while guesses < 5:
+    print("Guess a battleship location")
+    row_number, column_number = ask_user_for_board_position()
 
+    if guesses_board[row_number][column_number] != 'o':
+        print("You have already guessed that place!")
+        continue
+
+    # Check that there are no repeats
+    if board[row_number][column_number] == 'X':
+        print("HIT!")
+        guesses_board[row_number][column_number] = 's'
+        guesses = guesses + 1
+    else:
+        guesses_board[row_number][column_number] = 'x'
+        print("MISS!")
+
+    print_board(guesses_board)
+print("GAME OVER!")
