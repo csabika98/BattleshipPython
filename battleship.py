@@ -30,6 +30,7 @@ def choosing_scene():
     ship = 1
     shoot_board1 = init_board()
     shoot_board2 = init_board()
+    previous_move = []
     is_it_shooting_phase = True
     board_player_1 = init_board() # board of each player
     board_player_2 = init_board()
@@ -48,10 +49,14 @@ def choosing_scene():
         os.system('cls||clear')
         if not valid_input(coordinates):  # sorting out if you have typed a valid input or not
             continue
-        if not place_is_okay(board, translated_coordinates)
-            print("Place is already taken!")
-            continue
-        translated_coordinates = converter(coordinates) # i make a variable to my converter
+        translated_coordinates = converter(coordinates)
+        if ship == 2:
+            if place_is_available_next_part(board, previous_move, translated_coordinates):
+             continue
+        if ship == 3:
+            if not place_is_available_next_part(board, previous_move, translated_coordinates):
+                print("Vertical or horizontal only!")
+                continue 
         mark_player_coordinates(board,translated_coordinates, mark)
         previous_move = translated_coordinates
         ship +=1
@@ -168,6 +173,15 @@ def mark_player_coordinates(board, coordinates, mark):  # marking your choices o
     board[coordinates[0]][coordinates[1]] = mark
     return board
 
+def place_is_available_next_part(board, previous_move, coordinates):
+    if board[coordinates[0]] == board[previous_move[0]]:
+        if coordinates[1] == previous_move[1] - 1 or coordinates[1] == previous_move[1] + 1:
+            print("Invalid position, you musn't pick side by side !")
+            return True
+    if board[coordinates[1]] == board[previous_move[1]]:
+        if coordinates[0] == previous_move[0] - 1 or coordinates[0] == previous_move[0] + 1:
+            print("Invalid position, you musn't pick side by side !")
+            return True
 
 
 if __name__ == "__main__":
