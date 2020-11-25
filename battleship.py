@@ -32,7 +32,7 @@ def choosing_scene():
     mark = "" # need mark your choices , literraly saving your choices 
     current_player = 1 # variables to be able to switch players (player1 or player2 ) NOT FINISHED UNDER DEVELOPMENT
     app_only_run_once = True # with this variable i am able to PRINT Board  , OR Stop the screen/print board and with this i am making sure the program runs only Once
-    while app_only_run_once: # i make a while loop using my variables if TRUE the program STARTS , if FALSE It not starts anymore
+    while app_only_run_once: # i made a while loop using my variables if TRUE the program STARTS , if FALSE It not starts anymore
         mark = "X"  
         if current_player == 1: # you can decide if player1 start his choosing or player2 
             print_board(board_player_1)
