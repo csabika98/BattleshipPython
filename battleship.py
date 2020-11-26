@@ -5,6 +5,8 @@ import time
 board = []
 for i in range(5):
     board.append(["o"] * 5)
+
+
 board2 = []
 for i in range(5):
     board2.append(["o"] * 5)
