@@ -53,6 +53,9 @@ def ask_player_2_user_for_board_position():
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def get_input(): # easy get_input
+    coordinates = input("Please enter a column and row: ")
+    return coordinates
 
 def print_board(board):
     # Show the board, one row at a time
