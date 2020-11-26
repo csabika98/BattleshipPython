@@ -1,5 +1,6 @@
 import os
 import time
+import io
 # A board is a list of rows, and each row is a list of cells with either an 'x' (a battleship)
 # or o (water)
 board = []
@@ -61,6 +62,12 @@ def ask_player_2_user_for_board_position():
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def ascii_art():
+    file = io.open("ascii_art.txt", "r", encoding="utf-8")
+    entire_file: str = file.read()
+    file.close()
+    ascii_text = f"\033[91m{entire_file}\033[00m"
+    print(ascii_text)
 
 def print_board(board):
     # Show the board, one row at a time
@@ -76,6 +83,8 @@ def print_board_2(board2):
 
 
 # We place 3 battleships for player 1
+ascii_art()
+time.sleep(3)
 counter = 0
 while counter != 3:
     print("Player 1 turn, choose 3 ship")
@@ -90,6 +99,7 @@ while counter != 3:
         board[row_number][column_number] = 'X'
         print_board(board)
         counter += 1
+
 
 
 time.sleep(1)
