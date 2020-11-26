@@ -7,10 +7,6 @@ for i in range(5):
     board.append(["o"] * 5)
 
 
-
-
-
-
 board2 = []
 for i in range(5):
     board2.append(["o"] * 5)
@@ -121,7 +117,7 @@ for i in range(5):
 
 # Keep playing until we have 5 right guesses
 guesses = 0
-while guesses < 2:
+while guesses < 5:
     print("Player 1 turn")
     print("Guess a battleship location")
     row_number, column_number = ask_player_1_user_for_board_position()
@@ -157,6 +153,7 @@ while guesses < 2:
         print("MISS!")
 
     print_board(guesses_board)
+print("Game Over")
 
 
 
