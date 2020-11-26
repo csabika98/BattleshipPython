@@ -5,6 +5,16 @@ import time
 board = []
 for i in range(5):
     board.append(["o"] * 5)
+
+
+
+
+
+
+board2 = []
+for i in range(5):
+    board2.append(["o"] * 5)
+
 # We want to refer to columns by letter, but Python accesses lists by number. So we define
 # a dictionary to translate letters to the corresponding number. Note that Python lists start in
 # zero, not in one!
@@ -53,9 +63,13 @@ def ask_player_2_user_for_board_position():
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-
 def print_board(board):
     # Show the board, one row at a time
+    print(" ", " ".join("ABCDE"))
+    for letter, row in zip('12345', board):
+        print(letter, " ".join(row))
+
+def print_board_2(board2):
     print(" ", " ".join("ABCDE"))
     for letter, row in zip('12345', board):
         print(letter, " ".join(row))
@@ -63,7 +77,7 @@ def print_board(board):
 
 # We want 5 battleships, so we use a for loop to ask for a ship 5 times!
 for n in range(3):
-    print("Player 1 turn, he choose 3 ship")
+    print("Player 1 turn, he chooses 3 ship")
     print("Where do you want ship ", n + 1, "?")
     row_number, column_number = ask_player_1_user_for_board_position()
    
@@ -84,9 +98,8 @@ for i in range(5):
     guesses_board.append(["o"] * 5)
 
 
-
 for n in range(3):
-    print("Player 2 turn, he choose 3 ship")
+    print("Player 2 turn, he chooses 3 ship")
     print("Where do you want ship ", n + 1, "?")
     row_number, column_number = ask_player_2_user_for_board_position()
    
@@ -96,7 +109,7 @@ for n in range(3):
         print("That spot already has a battleship in it!")
 
     board[row_number][column_number] = 'X'
-    # print_board(board)
+    # print_board_2(board2)
 
 time.sleep(1)
 # Now clear the screen, and the other player starts guessing
@@ -108,11 +121,11 @@ for i in range(5):
 
 # Keep playing until we have 5 right guesses
 guesses = 0
-while guesses < 5:
+while guesses < 2:
+    print("Player 1 turn")
     print("Guess a battleship location")
     row_number, column_number = ask_player_1_user_for_board_position()
     
-
     if guesses_board[row_number][column_number] != 'o':
         print("You have already guessed that place!")
         continue
@@ -125,16 +138,11 @@ while guesses < 5:
     else:
         guesses_board[row_number][column_number] = 'm'
         print("MISS!")
-
     print_board(guesses_board)
-print("GAME OVER!")
 
-guesses = 0
-while guesses < 5:
+    print("Player 2 turn")
     print("Guess a battleship location")
     row_number, column_number = ask_player_2_user_for_board_position()
-    
-
     if guesses_board[row_number][column_number] != 'o':
         print("You have already guessed that place!")
         continue
@@ -149,4 +157,6 @@ while guesses < 5:
         print("MISS!")
 
     print_board(guesses_board)
-print("GAME OVER!")
+
+
+
