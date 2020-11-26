@@ -5,8 +5,6 @@ import time
 board = []
 for i in range(5):
     board.append(["o"] * 5)
-
-
 board2 = []
 for i in range(5):
     board2.append(["o"] * 5)
@@ -16,7 +14,7 @@ for i in range(5):
 guesses_board2 = []
 for i in range(5):
     guesses_board2.append(["o"] * 5)
-# Easy way to transfor the user's input to an usable input for the program
+# Easy way to transform the user's input to an usable input for the program
 letters_to_numbers = {
     'a': 0,
     'b': 1,
@@ -26,8 +24,7 @@ letters_to_numbers = {
 }
 
 
-# By writing this as a function, we don't have to repeat it later. It's less code, it makes
-# the rest easier to read, and if we improve this, we have to do it only once!
+# Ask for the player's input
 def ask_player_1_user_for_board_position():
     column = input("column (A to E):").lower()
     while column not in "abcde":
@@ -44,6 +41,7 @@ def ask_player_1_user_for_board_position():
     return int(row) - 1, letters_to_numbers[column]
 
 
+# Ask for the player's input
 def ask_player_2_user_for_board_position():
     column = input("column (A to E):").lower()
     while column not in "abcde":
@@ -142,7 +140,7 @@ while True:
         guesses_board[row_number][column_number] = 'm'
         print("MISS!")
     print_board(guesses_board)
-#####################################################################################################
+# # # # Divide the 2 player's turn's code # # # #
     print("Player 2 turn")
     print("Guess a battleship location")
     row_number, column_number = ask_player_2_user_for_board_position()
